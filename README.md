@@ -68,3 +68,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### 参考文献
+1. [【完全保存版】 Banana SDKを使って、AstarのAccount Abstractionを作ってみよう！ - note](https://note.com/standenglish/n/nf9e9d39b8f7f)
+2. [Banana SDK - Astar Docs](https://docs.astar.network/docs/build/EVM/developer-tooling/banana/)

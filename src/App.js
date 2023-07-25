@@ -3,6 +3,7 @@ import { Banana, Chains } from "@rize-labs/banana-wallet-sdk";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { SampleAbi } from "./contract/SampleAbi";
+import { SAMPLE_CONTRACT_ADDRESS } from "./utils/constants";
 
 /**
  * App Component
@@ -15,7 +16,6 @@ function App() {
   const [walletInstance, setWalletInstance] = useState(null);
   const [output, setOutput] = useState("Welcome to Banana Demo");
 
-  const SampleContractAddress = "0xCC497f137C3A5036C043EBd62c36F1b8C8A636C0";
 
   /**
    * bananaインスタンスを取得する method
@@ -66,7 +66,7 @@ function App() {
     // トランザクションデータを作成
     const tx = {
       gasLimit: "0x55555",
-      to: SampleContractAddress,
+      to: SAMPLE_CONTRACT_ADDRESS,
       value: ethers.utils.parseEther(amount),
       data: new ethers.utils.Interface(SampleAbi).encodeFunctionData(
         "stake",
