@@ -1,14 +1,14 @@
-import "./App.css";
+import "./css/App.css";
 import { Banana, Chains } from "@rize-labs/banana-wallet-sdk";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { SampleAbi } from "./SampleAbi";
+import { SampleAbi } from "./contract/SampleAbi";
 
+/**
+ * App Component
+ */
 function App() {
-  useEffect(() => {
-    getBananaInstance();
-  }, []);
-
+  
   const [walletAddress, setWalletAddress] = useState("");
   const [bananaSdkInstance, setBananSdkInstance] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -17,11 +17,17 @@ function App() {
 
   const SampleContractAddress = "0xCC497f137C3A5036C043EBd62c36F1b8C8A636C0";
 
+  /**
+   * bananaインスタンスを取得する method
+   */
   const getBananaInstance = () => {
     const bananaInstance = new Banana(Chains.shibuyaTestnet);
     setBananSdkInstance(bananaInstance);
   };
 
+  /**
+   * createWallet method
+   */
   const createWallet = async () => {
     setIsLoading(true);
     const wallet = await bananaSdkInstance.createWallet();
@@ -32,8 +38,13 @@ function App() {
     setIsLoading(false);
   };
 
+  /**
+   * walletに接続
+   */
   const connectWallet = async () => {
     const walletName = bananaSdkInstance.getWalletName();
+
+    // もし見つからなければ新たにウォレットを作成する。
     if (walletName) {
       setIsLoading(true);
       const wallet = await bananaSdkInstance.connectWallet(walletName);
@@ -52,6 +63,7 @@ function App() {
     setIsLoading(true);
     const signer = walletInstance.getSigner();
     const amount = "0.05";
+    // トランザクションデータを作成
     const tx = {
       gasLimit: "0x55555",
       to: SampleContractAddress,
@@ -63,6 +75,7 @@ function App() {
     };
 
     try {
+      // トランザクションを送信する。
       const txn = await signer.sendTransaction(tx);
       setOutput(JSON.stringify(txn));
     } catch (err) {
@@ -71,6 +84,9 @@ function App() {
     setIsLoading(false);
   };
 
+  /**
+   * signMessage method
+   */
   const signMessage = async () => {
     setIsLoading(true);
     const sampleMsg = "Hello World";
@@ -80,6 +96,9 @@ function App() {
     setIsLoading(false);
   };
 
+  /**
+   * getChainId method
+   */
   const getChainId = async () => {
     setIsLoading(true);
     const signer = walletInstance.getSigner();
@@ -88,6 +107,9 @@ function App() {
     setIsLoading(false);
   };
 
+  /**
+   * getNetwork method
+   */
   const getNetwork = async () => {
     setIsLoading(true);
     const provider = walletInstance.getProvider();
@@ -96,26 +118,48 @@ function App() {
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    getBananaInstance();
+  }, []);
+
   return (
     <div className="App">
       <h1>Banana SDK Demo</h1>
       {walletAddress && <p> Wallet Address: {walletAddress}</p>}
-      <button className="btn" onClick={() => createWallet()}>
+      <button 
+        className="btn" 
+        onClick={() => createWallet()}
+      >
         Create Wallet
       </button>
-      <button className="btn" onClick={() => connectWallet()}>
+      <button 
+        className="btn" 
+        onClick={() => connectWallet()}
+      >
         Connect Wallet
       </button>
-      <button className="btn" onClick={() => getChainId()}>
+      <button 
+        className="btn" 
+        onClick={() => getChainId()}
+      >
         ChainId
       </button>
-      <button className="btn" onClick={() => getNetwork()}>
+      <button 
+        className="btn" 
+        onClick={() => getNetwork()}
+      >
         Network
       </button>
-      <button className="btn" onClick={() => makeTransaction()}>
+      <button 
+        className="btn" 
+        onClick={() => makeTransaction()}
+      >
         Make transaction
       </button>
-      <button className="btn" onClick={() => signMessage()}>
+      <button 
+        className="btn" 
+        onClick={() => signMessage()}
+      >
         Sign message
       </button>
       <h1> Output Panel</h1>
